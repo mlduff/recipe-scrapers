@@ -98,6 +98,7 @@ from .fitslowcookerqueen import FitSlowCookerQueen
 from .food import Food
 from .food52 import Food52
 from .foodandwine import FoodAndWine
+from .foodbag import Foodbag
 from .foodfidelity import FoodFidelity
 from .foodnetwork import FoodNetwork
 from .foodrepublic import FoodRepublic
@@ -399,6 +400,7 @@ SCRAPERS = {
     EatLiveRun.host(): EatLiveRun,
     ElaVegan.host(): ElaVegan,
     FitSlowCookerQueen.host(): FitSlowCookerQueen,
+    Foodbag.host(): Foodbag,
     GourmetTraveller.host(): GourmetTraveller,
     GrandFrais.host(): GrandFrais,
     HeatherChristo.host(): HeatherChristo,
