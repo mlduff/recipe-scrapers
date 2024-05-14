@@ -1,25 +1,12 @@
 # mypy: allow-untyped-defs
 
-import re
-
-import requests
-
 from ._abstract import AbstractScraper
-from ._utils import url_path_to_dict
 
 
 class Foodbag(AbstractScraper):
     def __init__(self, url, proxies=None, timeout=None, *args, **kwargs):
-        super().__init__(url=url, *args, **kwargs)
-
-        dish_id = self._get_dish_id()
-        response = requests.get(
-            "https://admin.foodbag.be/api/dishrecipe",
-            {"dishId": dish_id, "language": "nl"},
-        )
-
-        self.data = response.json()
-        self.recipe_data = self.data.get("dishRecipe")
+        super().__init__(url=url, proxies=proxies, timeout=timeout, *args, **kwargs)
+        print(self._extract_script_data())
 
     @classmethod
     def host(cls):
@@ -29,7 +16,7 @@ class Foodbag(AbstractScraper):
         return self.schema.author()
 
     def title(self):
-        return self.recipe_data.get("name")
+        return self.schema.title()
 
     def category(self):
         return self.schema.category()
@@ -58,10 +45,13 @@ class Foodbag(AbstractScraper):
     def description(self):
         return self.schema.description()
 
-    def _get_dish_id(self):
-        url_dict = url_path_to_dict(self.url)
-        query = url_dict.get("query")
-        match = re.search(r"dishId=([^&]+)", query)
-        if not match:
-            return None
-        return match.group(1)
+    def _extract_script_data(self):
+        scripts = self.soup.find_all("script")
+        next_script_strings = [
+            script.string
+            for script in scripts
+            if script.string and script.string.startswith("self.__next_f.push")
+        ]
+        for next_script_string in next_script_strings:
+            if "data" in next_script_string:
+                pass

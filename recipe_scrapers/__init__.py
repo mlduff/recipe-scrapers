@@ -401,6 +401,7 @@ SCRAPERS = {
     ElaVegan.host(): ElaVegan,
     FitSlowCookerQueen.host(): FitSlowCookerQueen,
     Foodbag.host(): Foodbag,
+    Foodbag.host(): Foodbag,
     GourmetTraveller.host(): GourmetTraveller,
     GrandFrais.host(): GrandFrais,
     HeatherChristo.host(): HeatherChristo,
